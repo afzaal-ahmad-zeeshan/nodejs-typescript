@@ -2,16 +2,18 @@ import express, { Request, Response, NextFunction } from 'express';
 import User from '../models/user';
 import Database from '../data/db';
 import bcrypt from 'bcrypt';
+import Token from '../models/token';
+import { v4 } from 'uuid';
 const db = Database.getInstance();
 const router = express.Router();
 
 function isValid(user: User): boolean {
     return (
-        !user.id &&
-        user.username &&
-        user.password &&
-        user.deposit === 0 &&
-        user.roles.length === 0
+        !user.id &&                         // user is should not be supplied
+        user.username &&                    // username should be supplied
+        user.password &&                    // password should be supplied
+        user.deposit === 0 &&               // deposit should be 0 initially
+        user.roles.length !== 0             // roles should not be empty
     );
 }
 
@@ -54,17 +56,33 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
     });
 });
 
-router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
 
     // check username
+    const user = db.users.find(u => u.username.toLowerCase() === username.toLowerCase());
 
     // check password hash
+    if (!user || !await bcrypt.compare(password, user.password)) {
+        res.status(200).send({
+            statusCode: 404,
+            message: 'Username or password was incorrect.',
+        });
+        return;
+    }
 
     // generate token and send it
+    const token: Token = {
+        id: v4(),
+        token: v4(),
+        userId: user.id,
+        activeUntil: (new Date(new Date().getTime() + 30 * 60000)).toISOString()     // 30 minutes from now
+    }
+
+    db.tokens.push(token);
     res.status(200).send({
         statusCode: 200,
-        message: 'OK',
+        token: token,
     });
 });
 

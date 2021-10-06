@@ -43,7 +43,6 @@ const users: User[] = [
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
-            constants.Roles.Buyer,
             constants.Roles.Seller,
         ],
     },

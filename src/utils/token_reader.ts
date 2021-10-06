@@ -22,13 +22,17 @@ const db = Database.getInstance();
         const token: string = req.headers.authorization.toLowerCase().replace('bearer ', '');
         const tokenInstance: Token = db.tokens.find(t => t.token === token);
 
-        if (new Date(tokenInstance.activeUntil) <= new Date()) {
-            res.locals.isAuthenticated = false;
-            console.log(`[INFO] unauthorized request with expired token`);
+        if (tokenInstance) {
+            if (new Date(tokenInstance.activeUntil) <= new Date()) {
+                res.locals.isAuthenticated = false;
+                console.log(`[INFO] unauthorized request with expired token`);
+            } else {
+                res.locals.userId = tokenInstance.userId;
+                res.locals.token = token;
+                console.log(`[INFO] authorized request with userId ${res.locals.userId}`);
+            }
         } else {
-            res.locals.userId = tokenInstance.userId;
-            res.locals.token = token;
-            console.log(`[INFO] authorized request with userId ${res.locals.userId}`);
+            res.locals.isAuthenticated = false;
         }
     }
     next();
