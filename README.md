@@ -16,15 +16,6 @@ npm run serve
 
 This should run the app on your [http://localhost:3000](http://localhost:3000).
 
-You can build the production instance and launch the web application using:
-
-``` bash
-npm run app
-```
-
-This should build the frontend, transpile the TypeScript and launch the UI for
-the application.
-
 ## Postman
 
 The API supports documentation in-code, with OpenAPI/Swagger, and a collection

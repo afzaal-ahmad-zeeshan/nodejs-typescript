@@ -11,7 +11,7 @@ import { randomInt } from 'crypto';
 const users: User[] = [
     {
         id: v4(),
-        username: 'John Doe',
+        username: 'john-doe',
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
@@ -20,7 +20,7 @@ const users: User[] = [
     },
     {
         id: v4(),
-        username: 'Jane Doe',
+        username: 'jane-doe',
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
@@ -29,7 +29,7 @@ const users: User[] = [
     },
     {
         id: v4(),
-        username: 'Dohn Joe',
+        username: 'dohn-joe',
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
@@ -39,7 +39,7 @@ const users: User[] = [
     },
     {
         id: v4(),
-        username: 'Dane Joe',
+        username: 'doe-jane',
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
@@ -48,7 +48,7 @@ const users: User[] = [
     },
     {
         id: v4(),
-        username: 'Dane Joe',
+        username: 'dane-joe',
         password: bcrypt.hashSync('I234S6789O', 10),
         deposit: 10,
         roles: [
@@ -66,70 +66,70 @@ const products: Product[] = [
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(2, users.length)].id,
     },
     {
         id: v4(),
         productName: `Product ${v4()}`,
-        cost: randomInt(3, 10),
+        cost: 5 * randomInt(1, 3),
         amountAvailable: randomInt(2, 5),
         sellerId: users[randomInt(users.length)].id,
     },

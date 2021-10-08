@@ -70,6 +70,7 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     res.status(200).send({
         statusCode: 200,
         message: 'OK',
+        deposit: db.users[index].deposit,
     });
 });
 
@@ -99,6 +100,7 @@ router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
     res.status(200).send({
         statusCode: 200,
         message: 'OK',
+        deposit: db.users[index].deposit,
     });
 });
 

@@ -131,7 +131,12 @@ router.post('/buy', (req: Request, res: Response, next: NextFunction) => {
     db.users[userIndex] = user;
     res.status(200).send({
         statusCode: 200,
-        message: 'OK',
+        receipt: {
+            product: product,
+            amount: amount,
+            cost: cost,
+            change: user.deposit,
+        },
     });
 });
 

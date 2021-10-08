@@ -2,11 +2,11 @@ import express from 'express';
 
 // configs
 const app = express();
-const port = 3000;
+const port = 1234;
 import morgan from 'morgan';
-app.use(morgan());
+app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 
 // read the token and attach details to HTTP context
