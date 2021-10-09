@@ -44,7 +44,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'This endpoint requires a valid token to deposit amount in.',
         });
@@ -56,7 +56,7 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     // check the role
     let user = db.users[index];
     if (user.roles.filter(role => role === constants.Roles.Buyer).length === 0) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'This endpoint can only be used by buyers.',
         });
@@ -64,7 +64,7 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     }
 
     // increment the deposit
-    user.deposit += deposit;
+    user.deposit = user.deposit + Number.parseInt(deposit);
     db.users[index] = user;
 
     res.status(200).send({
@@ -76,7 +76,7 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'This endpoint requires a valid token to reset the deposit for.',
         });
@@ -87,7 +87,7 @@ router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
     // check the role
     let user = db.users[index];
     if (user.roles.filter(role => role === constants.Roles.Buyer).length === 0) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'This endpoint can only be used by buyers.',
         });
@@ -106,7 +106,7 @@ router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
 
 router.put('/', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'You are not authorized to perform this action.',
         });
@@ -144,7 +144,7 @@ router.put('/:userId', (req: Request, res: Response, next: NextFunction) => {
 
 router.delete('/', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
-        res.status(400).send({
+        res.status(200).send({
             statusCode: 400,
             message: 'You are not authorized to perform this action.',
         });

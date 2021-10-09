@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { updateDeposit } from '../../store/actions/user';
 
 function Product() {
   const auth = useSelector(state => state.auth);
   const user = useSelector(state => state.user);
   const [ item, setItem ] = useState(null);
   const [ error, setError ] = useState(null);
+  const [ message, setMessage ] = useState(null);
   const { productId } = useParams();
+  const dispatch = useDispatch();
+
+  // refs
+  const quantityRef = React.createRef();
 
   // load products
   useEffect(() => {
@@ -24,6 +30,35 @@ function Product() {
     })
   }, []);
 
+  const buy = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('/api/products/buy', {
+        productId: productId,
+        amount: quantityRef.current.value,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${auth.token}`,
+        },
+      });
+
+      if (response.data.statusCode === 200) {
+        const receipt = response.data.receipt;
+        console.log(JSON.stringify(response.data));
+        setItem(receipt.product);
+        setMessage(`You bought the product with ${receipt.cost * receipt.amount} units.`);
+        dispatch(updateDeposit({
+          deposit: receipt.change,
+        }));
+      } else {
+        setError(response.data.message);
+      }
+    } catch (e) {
+      setError('Cannot buy the product right now.');
+    }
+  }
+
   if (!item) {
     return <>
       <div className="container">
@@ -34,20 +69,21 @@ function Product() {
 
   return (
     <div className="container">
-      {error && <div className="alert alert-danger"></div>}
       <h2>{item.productName}</h2>
       <p>SellerID: {item.sellerId}</p>
       <p>Cost: {item.cost} units</p>
       <p>{item.amountAvailable} items available.</p>
 
       <hr />
+      {error && <div className="alert alert-danger">{error}</div>}
+      {message && <div className="alert alert-success">{message}</div>}
       {auth.loggedIn && <div>
           <form method="post">
             <label htmlFor="quantity">How many to buy?</label>
-            <input type="number" className="form-control" name="quantity" id="quantity" />
+            <input type="number" className="form-control" name="quantity" id="quantity" ref={quantityRef} />
             {user && <small>You have {"" + user.user.deposit} units available.</small>}
             <br />
-            <input type="submit" className="btn btn-default" disabled={user.user.deposit <= item.cost} />
+            <input type="submit" className="btn btn-default" disabled={user.user.deposit < item.cost} onClick={buy} />
           </form>
         </div>}
     </div>

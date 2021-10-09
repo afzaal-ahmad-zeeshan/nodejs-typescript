@@ -9,7 +9,7 @@ function Products() {
   // load products
   useEffect(() => {
     axios.get('/api/products').then(response => {
-      console.log(JSON.stringify(response));
+      // console.log(JSON.stringify(response));
       if (response.data.statusCode === 200) {
         setItems(response.data.products);
       }
@@ -30,7 +30,7 @@ function Products() {
     <div className="container">
       {error && <div className="alert alert-danger"></div>}
       {items.map(item => {
-        return <div className="card">
+        return <div className="card" key={item.id}>
           <div className="card-body">
             <p className="card-title">Title: {item.productName}</p>
             <p>Seller ID: {item.sellerId}</p>

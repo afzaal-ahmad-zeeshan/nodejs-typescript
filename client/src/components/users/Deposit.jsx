@@ -11,7 +11,6 @@ function Deposit() {
   const auth = useSelector(state => state.auth);
   const state = useSelector(state => state.user);
   const [problem, setProblem] = useState(null);
-  const [response, setResponse] = useState(null);
   const dispatch = useDispatch();
 
   // refs
@@ -36,6 +35,8 @@ function Deposit() {
             user: userResponse.data.user,
           }));
         }
+      } else {
+        setProblem(response.data.message);
       }
     } catch (e) {
       setProblem('Cannot deposit the amount right now.');

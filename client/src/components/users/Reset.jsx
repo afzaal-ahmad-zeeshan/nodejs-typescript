@@ -23,7 +23,7 @@ function Reset() {
     e.preventDefault();
 
     try {
-      const response = await axios.put('/api/users/reset', {}, {
+      const response = await axios.post('/api/users/reset', {}, {
         headers: {
           'Authorization': `Bearer ${auth.token}`,
         },
@@ -34,18 +34,8 @@ function Reset() {
         dispatch(updateDeposit({
           deposit: response.data.deposit,
         }));
-        // // get user
-        // const userResponse = await axios.get(`/api/users/${state.user.id}`);
-        // if (userResponse.data.statusCode === 200) {
-        //   console.log(`[INFO] updated deposit is ${userResponse.data.user.deposit}`);
-        //   dispatch(updateDeposit({
-        //     deposit: userResponse.data.user.deposit,
-        //   }));
-        // } else {
-        //   setProblem('Could not load the user profile.');
-        // }
       } else {
-        setProblem('Could not reset the deposit.');
+        setProblem(response.data.message);
       }
     } catch (e) {
       setProblem('Could not reset the deposit.');
