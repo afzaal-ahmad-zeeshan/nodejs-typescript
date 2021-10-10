@@ -9,11 +9,10 @@ function Products() {
   // load products
   useEffect(() => {
     axios.get('/api/products').then(response => {
-      // console.log(JSON.stringify(response));
       if (response.data.statusCode === 200) {
         setItems(response.data.products);
       }
-    }).catch(error => {
+    }).catch(_error => {
       setError(true);
     })
   }, []);

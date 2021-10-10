@@ -4,6 +4,7 @@ let initialState = {
     items: null,
 };
 
+// not storing the products in localStorage
 export const product = (state = initialState, action) => {
     if (!action) {
         return state;

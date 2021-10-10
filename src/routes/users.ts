@@ -50,7 +50,7 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
         });
         return;
     }
-    const { deposit } = req.body;
+    let { deposit } = req.body;
     const index = db.users.findIndex(u => u.id.toLowerCase() === res.locals.userId.toLowerCase()); // lowercase, just in case
 
     // check the role
@@ -64,14 +64,22 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     }
 
     // increment the deposit
-    user.deposit = user.deposit + Number.parseInt(deposit);
-    db.users[index] = user;
+    deposit = Number.parseInt(deposit);
+    if ([ 5, 10, 20, 50, 100 ].indexOf(deposit) > -1) {
+        user.deposit = user.deposit + Number.parseInt(deposit);
+        db.users[index] = user;
 
-    res.status(200).send({
-        statusCode: 200,
-        message: 'OK',
-        deposit: db.users[index].deposit,
-    });
+        res.status(200).send({
+            statusCode: 200,
+            message: 'OK',
+            deposit: db.users[index].deposit,
+        });
+    } else {
+        res.status(200).send({
+            statusCode: 400,
+            message: 'Cannot process this deposit. You can deposit coins of 5, 10, 20, 50, or 100 only.',
+        });
+    }
 });
 
 router.post('/reset', (req: Request, res: Response, next: NextFunction) => {

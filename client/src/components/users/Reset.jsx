@@ -44,7 +44,6 @@ function Reset() {
 
   return (
     <div className="container">
-      {/* {JSON.stringify(state)} */}
       <p><b>Username</b>: {state.user.username}</p>
       <p><b>Current deposit</b>: {"" + state.user.deposit} units</p>
       {problem && <div className="alert alert-danger">{problem}</div>}

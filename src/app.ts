@@ -8,10 +8,16 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 // read the token and attach details to HTTP context
 import tokenReader from './utils/token_reader';
 app.use('*', tokenReader);
+
+// swagger
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import config from './swagger.config';
+const spec = swaggerJsdoc(config);
+app.use('/swagger.json', swaggerUi.serve, swaggerUi.setup(spec));
 
 // routes
 import usersRoute from './routes/users';

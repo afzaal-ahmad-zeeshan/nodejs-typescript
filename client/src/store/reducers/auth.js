@@ -7,6 +7,7 @@ let initialState = {
     activeUntil: null,
 };
 
+// persisting the token for UX
 export const auth = (state = initialState, action) => {
     if (!action) {
         return state;

@@ -8,8 +8,8 @@ import { updateUser } from '../../store/actions/user';
 
 function Deposit() {
   // state
-  const auth = useSelector(state => state.auth);
-  const state = useSelector(state => state.user);
+  const auth = useSelector(_state => _state.auth);
+  const state = useSelector(_state => _state.user);
   const [problem, setProblem] = useState(null);
   const dispatch = useDispatch();
 
@@ -51,7 +51,6 @@ function Deposit() {
 
   return (
     <div className="container">
-      {/* {JSON.stringify(state)} */}
       <p><b>Username</b>: {state.user.username}</p>
       <p><b>Deposit</b>: {state.user.deposit}</p>
       <hr />

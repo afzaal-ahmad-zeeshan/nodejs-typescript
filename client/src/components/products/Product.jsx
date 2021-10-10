@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +24,7 @@ function Product() {
       if (response.data.statusCode === 200) {
         setItem(response.data.product);
       }
-    }).catch(error => {
+    }).catch(_error => {
       setError(true);
     })
   }, []);
@@ -54,7 +53,7 @@ function Product() {
       } else {
         setError(response.data.message);
       }
-    } catch (e) {
+    } catch (_e) {
       setError('Cannot buy the product right now.');
     }
   }

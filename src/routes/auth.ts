@@ -17,6 +17,17 @@ function isValid(user: User): boolean {
     );
 }
 
+/**
+ * @openapi
+ * /api/auth/tokens:
+ *   get:
+ *     tags:
+ *       - auth
+ *     description: Get the tokens for signed in user using their token.
+ *     responses:
+ *       200:
+ *         description: Returns the tokens for the active user.
+ */
 router.get('/tokens', (req: Request, res: Response, next: NextFunction) => {
     if (res.locals.isAuthenticated) {
         const tokens = db.tokens.filter(t => t.userId === res.locals.userId);
@@ -33,6 +44,19 @@ router.get('/tokens', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+/**
+ * @openapi
+ * /api/auth/register:
+ *   post:
+ *     tags:
+ *       - auth
+ *     description: Register a user to the system.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if user has been registered.
+ *       400:
+ *         description: Returns an error if the model is not valid.
+ */
 router.post('/register', async (req: Request, res: Response, next: NextFunction) => {
     var user: User = req.body;
 
@@ -56,6 +80,19 @@ router.post('/register', async (req: Request, res: Response, next: NextFunction)
     });
 });
 
+/**
+ * @openapi
+ * /api/auth/login:
+ *   post:
+ *     tags:
+ *       - auth
+ *     description: Login the user with their username and password.
+ *     responses:
+ *       200:
+ *         description: Returns the token for the user if the details are correct.
+ *       404:
+ *         description: Returns error if the username or password was incorrect.
+ */
 router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body;
 
@@ -86,6 +123,17 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
     });
 });
 
+/**
+ * @openapi
+ * /api/auth/logout:
+ *   post:
+ *     tags:
+ *       - auth
+ *     description: Clear the token from the system.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the token has been cleared.
+ */
 router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
     if (res.locals.isAuthenticated) {
         db.tokens = db.tokens.filter(t => t.token !== res.locals.token);

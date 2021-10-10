@@ -10,6 +10,7 @@ export const login = ({ token, username, loggedIn, activeUntil }) => {
             token,
             loggedIn,
             activeUntil,
+            username
         }
     }
 }

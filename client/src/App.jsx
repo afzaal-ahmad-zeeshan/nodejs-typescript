@@ -10,11 +10,8 @@ import { logout } from "./store/actions/auth";
 
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-
 import Home from './components/Home';
-
 import Profile from './components/users/Profile';
-
 import Products from './components/products/Products';
 import Product from "./components/products/Product";
 import Deposit from "./components/users/Deposit";
