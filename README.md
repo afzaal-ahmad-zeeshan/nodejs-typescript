@@ -16,6 +16,8 @@ npm run serve
 
 This should run the app on your [http://localhost:3000](http://localhost:3000).
 
+> If this command takes too long to run, comment the Swagger code.
+
 ## Postman
 
 The API supports documentation in-code, with OpenAPI/Swagger, and a collection

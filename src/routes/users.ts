@@ -6,6 +6,17 @@ import User from '../models/user';
 const router = express.Router();
 const db = Database.getInstance();
 
+/**
+ * @openapi
+ * /api/users/:
+ *   get:
+ *     tags:
+ *       - users
+ *     description: Get the list of users in the system
+ *     responses:
+ *       200:
+ *         description: Returns the list of users.
+ */
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
     let _users = [];
     for (let user of db.users) {
@@ -22,6 +33,17 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/{userId}:
+ *   get:
+ *     tags:
+ *       - users
+ *     description: Get the user by their user ID.
+ *     responses:
+ *       200:
+ *         description: Returns the user found by that user ID.
+ */
 router.get('/:userId', (req: Request, res: Response, next: NextFunction) => {
     const user = db.users.find(u => u.id === req.params.userId);
     res.status(200).send({
@@ -35,6 +57,17 @@ router.get('/:userId', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Placeholder endpoint. To create a new user, use the /api/auth/register endpoint.
+ *     responses:
+ *       301:
+ *         description: Returns a redirect to the other endpoint.
+ */
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
     res.status(301).send({
         statusCode: 301,
@@ -42,6 +75,17 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/deposit:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Deposits the amount to the active user's account.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' and the current deposit value if successful.
+ */
 router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
         res.status(200).send({
@@ -82,6 +126,17 @@ router.post('/deposit', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+/**
+ * @openapi
+ * /api/users/reset:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Resets the deposit for the currently active user. Note that it resets the deposit to zero.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' and current deposit if the account had been reset.
+ */
 router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
         res.status(200).send({
@@ -112,6 +167,17 @@ router.post('/reset', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/:
+ *   put:
+ *     tags:
+ *       - users
+ *     description: Updates the user's details in the account using the active userId.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the user was updated.
+ */
 router.put('/', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
         res.status(200).send({
@@ -135,6 +201,17 @@ router.put('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/{userId}:
+ *   put:
+ *     tags:
+ *       - users
+ *     description: Updates the user's details in the account using the userId in URL.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the user has been updated.
+ */
 router.put('/:userId', (req: Request, res: Response, next: NextFunction) => {
     const user: User = req.body;
 
@@ -150,6 +227,17 @@ router.put('/:userId', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/:
+ *   delete:
+ *     tags:
+ *       - users
+ *     description: Deletes the user from the system using the active userId.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the user has been deleted.
+ */
 router.delete('/', (req: Request, res: Response, next: NextFunction) => {
     if (!res.locals.isAuthenticated) {
         res.status(200).send({
@@ -165,6 +253,17 @@ router.delete('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+/**
+ * @openapi
+ * /api/users/{userId}:
+ *   delete:
+ *     tags:
+ *       - users
+ *     description: Deletes the user from the system using userId from URL.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the user has been deleted.
+ */
 router.delete('/:userId', (req: Request, res: Response, next: NextFunction) => {
     db.users = db.users.filter(user => user.id !== req.params.userId);
     res.status(200).send({

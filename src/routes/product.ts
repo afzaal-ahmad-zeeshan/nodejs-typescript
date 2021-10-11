@@ -7,6 +7,17 @@ import constants from '../data/constants';
 
 const router = express.Router();
 
+/**
+ * @openapi
+ * /api/products/:
+ *   get:
+ *     tags:
+ *       - products
+ *     description: Get the list of products in the system.
+ *     responses:
+ *       200:
+ *         description: Returns the list of products.
+ */
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.status(200).send({
         statusCode: 200,
@@ -14,6 +25,18 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+
+/**
+ * @openapi
+ * /api/products/{productId}:
+ *   get:
+ *     tags:
+ *       - products
+ *     description: Gets the product from the system using the productId.
+ *     responses:
+ *       200:
+ *         description: Returns the product.
+ */
 router.get('/:productId', (req: Request, res: Response, next: NextFunction) => {
     const product = db.products.find(p => p.id === req.params.productId);
 
@@ -30,6 +53,17 @@ router.get('/:productId', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+/**
+ * @openapi
+ * /api/products/:
+ *   post:
+ *     tags:
+ *       - products
+ *     description: Creates a new product in the system.
+ *     responses:
+ *       200:
+ *         description: Returns the product that was just created in the system.
+ */
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
     try {
         if (!res.locals.isAuthenticated) {
@@ -71,6 +105,18 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+
+/**
+ * @openapi
+ * /api/products/buy:
+ *   post:
+ *     tags:
+ *       - products
+ *     description: Buys the product using the userId of a buyer.
+ *     responses:
+ *       200:
+ *         description: Returns if the purchase was successful from a buyer account.
+ */
 router.post('/buy', (req: Request, res: Response, next: NextFunction) => {
     const { productId, amount } = req.body;
 
@@ -140,6 +186,18 @@ router.post('/buy', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+
+/**
+ * @openapi
+ * /api/products/:
+ *   put:
+ *     tags:
+ *       - products
+ *     description: Updates the product using the product details from the request body.
+ *     responses:
+ *       200:
+ *         description: Returns successful if the product was updated by the same seller.
+ */
 router.put('/', (req: Request, res: Response, next: NextFunction) => {
     // validate the token
     if (!res.locals.isAuthenticated) {
@@ -203,6 +261,18 @@ router.put('/', (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
+
+/**
+ * @openapi
+ * /api/products/{productId}:
+ *   delete:
+ *     tags:
+ *       - products
+ *     description: Deletes the product using the productId from URL and verifying against the user role and ID.
+ *     responses:
+ *       200:
+ *         description: Returns 'OK' if the product was deleted by the owner.
+ */
 router.delete('/:productId', (req: Request, res: Response, next: NextFunction) => {
     // check the token
     if (!res.locals.isAuthenticated) {
