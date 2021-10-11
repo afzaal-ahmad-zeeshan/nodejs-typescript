@@ -95,7 +95,7 @@ function App() {
               <h5>Resources</h5>
               <ul className="list-unstyled text-small">
                 <li><a className="text-muted" href="https://github.com/afzaal-ahmad-zeeshan/nodejs-typescript">GitHub repository</a></li>
-                {process.env.NODE_ENV === 'development' && <li><a className="text-muted" href="http://localhost:1234/swagger.json" target="_blank" rel="noreferrer">Local API</a></li>}
+                {process.env.NODE_ENV === 'development' && <li><a className="text-muted" href="http://localhost:3000/swagger.json" target="_blank" rel="noreferrer">Local API</a></li>}
               </ul>
             </div>
             <div className="col-6 col-md">
